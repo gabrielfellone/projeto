@@ -1,0 +1,314 @@
+
+
+Linux struct:
+
+
+
+
+hostnamectl = Informações do sistesma 
+
+firewall-cmd --state = Status Firewall
+
+lsblk = Verifica os discos
+
+bash = abrir uma sessao bash
+
+echo $$ = ver sessao bash atual
+
+export VARIAVEL = exporta variavel para bash filho
+
+exit = sair do bash atual
+
+File Gloabing = most used = [] {} (exp : ls -la {Aula[12345]} mostra as Aulas1,2,3,4,5)
+
+Expressão Regular = ^ começo  		$ final 	* nao aparece ou pode aparecer varias vezes	+ o caracter anterior precisa aparecer 1 ou mais vezes
+
+chmod 777 = dar permissao total [CUIDADO]
+chmod u+x ou chmod 744 = usuario atual
+
+whereis = verifica qual caminho do comando (exp: whereis date)
+
+$PATH = variavel do ambiente que encontra-se os locais dos comandos 
+
+vi ~/.profile = carrega quando loga no usuario 
+
+vim /etc/sysconfig/network-scripts/ifcfg-"NOME DA SUA PLACA" = Configuração do network
+= Exemplo DHCP E IP FIXO:
+DEVICE=eth0
+TYPE=Ethernet
+ONBOOT=yes
+BOOTPROTO=dhcp
+=====
+
+DEVICE=eth0
+TYPE=Ethernet
+IPADDR=192.168.1.198
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+ONBOOT=yes
+=====
+
+vim /etc/resolv.conf = Configurar DNS
+
+service network restart = Restarta a rede
+
+netstat -a | grep 8085 = verifica as portas no caso a 8065
+
+firewall-cmd --permanent --add-port=80/tcp = add porta 80 no Firewall
+
+ssh-keygen -t rsa = para criar as chaves entre os hots SSH
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.1.91 = transferir a chave para o destino
+
+_________________________________________
+
+Sintaxe:
+
+
+| = pipe, pega a saida do primeiro comando e usa como entrada
+(Exemplo: tail alunos.txt |wc -w ( recebe 10 ultimas linhas do arquivo alunos.txt E MOSTRA quantas palavras (wc) )
+
+
+
+; = pode quebrar o comando na mesma linha ( exp : ls alunos.txt ; echo Linux )
+
+&& = so executa o segundo comando se o primeiro funcionar
+
+|| = ao contrario do &&, ou seja so roda se o primeiro nao funcionar
+
+
+( ) = executa em um "sub-shell" (exp: ( cd .. ; ls ) verifica o diretorio raiz sem sair da atual )
+
+>  = redireciona a saida mas cria um arquivo novo sempre e apaga oq tinha antes (quando redirecionado para o mesmo arquivo claro) 
+>> = redireciona a saida mas nao exclui o arquivo, vai concatenando
+2> = saida de erro da execução 
+
+< = redireciona a entrada 
+
+
+"" = usado tmb para proteger caracter especial (exp = echo "*" ele printa o *) [ nao protege $, crase nem barra]
+\ = protege todos os caracter especial seguinte ( exp = echo = \* )
+''= aspas simples protegem tudo 
+
+______________________________________
+
+Variaveis
+
+
+env = verificar todas as variaveis do sistemas (muitas variaveis iniciam com o ambiente, use o |less pois tem mtas )
+set = igual o env mas enxerga tambem as variaveis exportadas 
+
+$ = referencia uma variavel (exp : echo $HORA, retorna o valor da variavel) 
+
+''= crase, atribui para a variavel um comando para executar (exp: HORA='date +%H' ou tmb $(date +...) )
+
+
+
+
+______________________________________
+
+Basic Comandos Linux:
+
+
+cd = Entrar e sair diretorio (mudar posição da arvore de diretorios)
+
+ls (sem argumento) = lista de arquivos simples
+ls -ltr = ordena do mais velho para o mais novo
+ls -1 = um arquivo por linha sem muita informação
+
+ps = lista os processos em execução na máquina na sessao atual
+ps axu (principal) = saida completa do ps (mostra usuario, feed(id), consumo de cpu, memoria, horario, nome completo)
+
+touch = criar arquivo em branco ou atualiza o horario do arquivo existente
+
+echo = escreve
+echo -n = escreve e nao quebra linha
+echo -e = aceita parametros especiais
+
+mkdir = criar diretorio
+mkdir -p = ele cria uma arvore de diretorio (exp: diretorio3/diretorio4
+
+rm = remove ARQUIVO
+rm -r = remove DIRETORIO
+rm -f = ele força a remoção, sem mensagem de erro
+rmdir = remove diretorio VAZIO
+
+sleep = conta tempo (como um cronometro)
+
+cat = resultado de um arquivo
+cat -b = numero as linhas que nao estao em branco
+cat -n = numera as linhas mesmo em branco
+cat-A = mostra caracteres especiais, tabulaçao, espacos 
+
+tac = semelhante ao cat
+
+tail = mostra as ultimas 10 linhas do arquivo (padrao)
+tail -5 = mostra as ultimas 5 linhas do arquivo
+head = as primeiras linhas
+
+wc = conta os caracteres, linhas, do arquivo   ( linha - palavra - caracteres )
+
+sort = ordena o arquivo
+sort -r = ordena decrecente
+
+uniq = lista sem repetir 
+
+tr = substitui um caracter de um string (exp: tr a b (troca toda a por b) )
+tr -d = deleta caracteres 
+
+cut = recorta partes de uma string (campos ou caracteres)
+
+dif = compara dois arquivos (aponta a diferença)
+
+sed = pouco do tr e do grep, faz substituição, faz o filtro e edita(incluir, substituir -s ou deletar -d)
+
+grep = procura uma string (exp grep Claudia aluno.txt ou aluno*) 
+grep -i = tira a função case sensitive (nao difere entre minuscula ou maiuscula) na pesquisa
+grep -c = mostra as ocorrencias desta string (ou seja, quantas vezes aparece)
+grep -v = faz ao contrario do -c
+grep -r = busca em todos os diretorios  *comando pesado*
+grep -e = egrep (aceita mais expressões regulares)
+egrep = aceita expressão regular 
+egrep --color = um alias para deixar colorido as pesquisas
+fgrep = nao aceita expressão regular
+
+more = mostra o arquivo paginando (enter pra descer, espaço para mostrar proxima pagina) (Q PARA SAIR TANTO LESS)
+less = igual o more porém voce pode usar as setas do teclado para navegar e pesquisar alguma palavra usando /
+
+find - faz uma busca por string diretorios ou arquivos na arvore de arquivos
+find -exec = procura e executa alguma comando em seguida
+
+pwd = verificar qual diretorio atual vc está
+
+date = mostra hora/data sistema (date +%H mostra a hora)
+
+seq = sequencia (usado para for, while, loop)
+
+expr = fazer conta, mas so numeros inteiros (exp: ARG1 + ARG2 )
+echo 2+2 | bc  = pipe bc faz conta tmb
+
+
+rm -rvf /caminho/* = remove arquivo ou diretorio NAO PEDE SENHA E APAGA TUDO
+
+ps -ef |grep NOME DO PROCESSO = Verifica o run do processo 
+
+_________________________  
+
+Arquivos:
+
+/etc/passwd = onde tem os usuarios do sistema
+
+/dev/null = limbo do shell (exp: se vc jogar uma saida pra lá com o >> nao vai pra lugar nenhum)
+
+
+
+
+
+
+================ Vi ======================
+
+ctrl+F = pagina pra baixo
+ctrl+B = pagina pra cima
+
+i = entra no modo de inserção , para sair aperte ESC
+x = remove a palavra que está o cursor
+r = substituir letra sobre cursor
+
+: = entra no modo de comando
+:1 = vai para a primeira linha
+:20 = vai para a linha 20
+:$ = vai para a ultima linha
+:! = executa um comando no bash sem sair do vi
+:w = salva
+:wq ou :x = salva e sai
+:q! = força sair
+
+/ = procura de cima pra baixo (exp : /Linux procura a palavra Linux)
+? = procura de baixo pra cima
+n = next
+N = volta a busca
+
+dd = recorta a linha que esta sobre o cursos (pode recortar o numero de linhas d2d = duas linhas)
+yy = copia a linha
+p = cola  a linha recortada
+
+
+
+
+============SCRIPT==============
+
+
+
+vi script.sh = para criar o script chamado script.sh (.sh é opcional mas é o padrao)
+
+
+SEM ASPAS '#'!/bin/bash = indicando que o script abaixo esta utilizando a linguagem e interpretador BASH
+
+Você precisa primeiro torná-lo um executável:
+chmod a+x script.sh
+
+./NOMEDOSCRIPT = executa o script
+./ = executa no diretorio atual
+source ou só . NOMEDOSCRIPT = executa no bash atual (nao em bash filo
+
+
+
+VARIAVEL=VALOR DA VARIAVEL 
+VARIAVEL=$(date +%H+%M)
+
+O Script funciona como linguagem estruturada, tipo C
+
+read = variavel de leitura (entrada usuario)
+read -p "insira o texto" VARIAVEL = mostra o texto inserido e atribui na variavel o valor de entrada
+read -s = omite a entrada no prompt (igual senha)
+ 
+
+Parametros:
+
+$0 = Nome do Programa
+$# = Quantidade de Parametros
+$* = Todos os parametros inseridos
+$1-9 = Cada um dos parametros
+________________________________________
+
+
+-- OFF TOPIC -- 
+
+
+Node.JS
+
+É como um JDK, imagine que ele rode o JS sem o browser
+Ele é como um ambiente para rodar a lingaguem JS
+
+Outro exemplo, o Csharp que é a linguagem e o .Net o ambiente 
+
+=====================
+
+
+Docker trabalha com conceito de container, 
+Ele usa os recursos do kernel host, nao precisando dos guest OS
+Voce pode migrar um container para outro ambiente com docker - portabilidade 
+load balancing 
+
+
+
+_________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
