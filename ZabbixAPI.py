@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 #-*-coding: utf-8-*-
 from zabbix_api import ZabbixAPI
-zapi=ZabbixAPI(server="URL ZABBIX")
-zapi.login("login","senha")
+zapi=ZabbixAPI(server="http://zabbix.em2it.com/zabbix")
+zapi.login("evandro.bagini","Sistemas2112")
 print "Version Zabbix:", zapi.api_version()
 hosts = zapi.host.get({"output": "extend", "sortfield": "name"})
 for x in hosts:

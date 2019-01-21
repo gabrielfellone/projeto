@@ -1,1 +1,12 @@
 Version 1.0
+
+
+------- NEEDED -------
+
+pip python
+
+oython 2.7
+
+zabbix_api
+
+pip request
